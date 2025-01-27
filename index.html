@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        let a = "rock";
+        let b = "paper";
+        let c = "scissors";
+
+        function getComputerChoice() {
+            let number = Math.random();
+
+            if((number >= 0) && (number < .33)) {
+                return a;
+            }
+            if ((number >= .33) && (number < .66)) {
+                return b;
+            }
+            if ((number >= .66) && (number < 1)) {
+                    return c;
+            }
+            else return "something's wrong";
+        }
+
+ 
+        
+
+        function getHumanChoice() {
+            const answer = prompt("Rock, Paper, or Scissors?");
+
+            if (answer === a) {
+                return a;
+            }
+            else if (answer === b) {
+                return b;
+            }
+            else if (answer === c) {
+                return c;
+            }
+            else return ("Not a choice!");
+            }
+     
+
+
+        function playGame() {
+
+        let humanScore = 0;
+        let computerScore = 0;  
+
+
+            function playRound(humanChoice, computerChoice) {
+            if((humanChoice === a) && (computerChoice === c) ||
+              (humanChoice === b) && (computerChoice === a) ||
+              (humanChoice === c) && (computerChoice === b)) {
+                return "Human wins! You: " + ++humanScore + " Computer: " + computerScore;
+              }
+            else if (humanChoice === computerChoice) {
+                return "Tie! Play again.";
+            }
+            else return "Computer wins! You: " + humanScore + " Computer: " + ++computerScore;
+            }
+
+
+            
+            for(var i=0;i<5;i++) {
+                const humanSelection = getHumanChoice();
+                const computerSelection = getComputerChoice();
+                console.log(playRound(humanSelection, computerSelection));
+            
+            }
+            
+                
+            }
+        console.log(playGame());
+        
+              
+    </script>
+</body>
+</html>
