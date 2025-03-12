@@ -1,0 +1,13 @@
+.scoreBoard {
+    background-color: powderblue;
+    margin: auto;
+    text-align: center;
+}
+
+button {
+    margin: auto;
+}
+
+.outcome {
+    text-align: center;
+}

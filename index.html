@@ -4,8 +4,23 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+    <link rel="stylesheet" href="styles.css">
 </head>
 <body>
+<div class="container">
+    <button id="rockButton">ROCK<img src = './images/rock.avif' height = 300px></button>
+    <button id="paperButton">PAPER<img src = './images/paper.jpg' height = 300px></button>
+    <button id="scissorsButton">SCISSORS<img src = './images/scissors.avif' height = 300px></button>
+</div>
+
+<div class="scoreBoard">SCORE</div>
+
+<div class="outcome"></div>
+
+
+    
+
+
     <script>
         let a = "rock";
         let b = "paper";
@@ -46,36 +61,98 @@
      
 
 
-        function playGame() {
+        
 
         let humanScore = 0;
         let computerScore = 0;  
-
+        const score = document.createElement("p");
+        const result = document.createElement("p");
 
             function playRound(humanChoice, computerChoice) {
             if((humanChoice === a) && (computerChoice === c) ||
               (humanChoice === b) && (computerChoice === a) ||
               (humanChoice === c) && (computerChoice === b)) {
-                return "Human wins! You: " + ++humanScore + " Computer: " + computerScore;
+                humanScore++;
+                result.innerText = `You chose ${humanChoice} and computer chose ${computerChoice}. You win!`
+                outcomeDiv.appendChild(result);
+                score.innerText = `You: ${humanScore} Computer: ${computerScore}`;
+                scoreBoard.appendChild(score);
               }
+
             else if (humanChoice === computerChoice) {
-                return "Tie! Play again.";
-            }
-            else return "Computer wins! You: " + humanScore + " Computer: " + ++computerScore;
+                result.innerText = `You chose ${humanChoice} and computer chose ${computerChoice}. It's a tie! Play again!`
+                outcomeDiv.appendChild(result);
+                score.innerText = `You: ${humanScore} Computer: ${computerScore}`;
+                scoreBoard.appendChild(score);
             }
 
+            else 
+                {computerScore++;
+                result.innerText = `You chose ${humanChoice} and computer chose ${computerChoice}. Computer wins!`
+                outcomeDiv.appendChild(result);
+                score.innerText = `You: ${humanScore} Computer: ${computerScore}`;
+                scoreBoard.appendChild(score);
+            }
+        }
 
-            
-            for(var i=0;i<5;i++) {
-                const humanSelection = getHumanChoice();
-                const computerSelection = getComputerChoice();
-                console.log(playRound(humanSelection, computerSelection));
-            
+        const announceWinner = (humanScore, computerScore) => {
+            const h2 = document.createElement("h2");
+            if (humanScore === 5) {
+                h2.innerText = "You won!"   
             }
-            
-                
+            if (computerScore === 5) {
+                h2.innerText = "You lost!"
             }
-        console.log(playGame());
+            outcomeDiv.appendChild(h2);
+            if (humanScore >=5 || computerScore >=5) {
+                document.querySelector('#scissorsButton').disabled = true;
+                document.querySelector('#rockButton').disabled = true;
+                document.querySelector('#paperButton').disabled = true;
+                const again = document.createElement("button");
+                again.classList.add("againButton");
+                again.innerText = "Play Again?";
+                outcomeDiv.appendChild(again);
+            }
+
+        }
+
+        const rockBtn = document.querySelector("#rockButton");
+        const paperBtn = document.querySelector("#paperButton");
+        const scissorsBtn = document.querySelector("#scissorsButton");
+        const againBtn = document.querySelector(".againButton");
+        const outcomeDiv = document.querySelector(".outcome");
+        const scoreBoard = document.querySelector(".scoreBoard");
+
+        rockBtn.addEventListener('click', (e) => {
+            const computerChoice = getComputerChoice();
+            const humanChoice = a;
+            playRound(humanChoice, computerChoice);
+            announceWinner(humanScore, computerScore);
+        })
+
+        paperBtn.addEventListener('click', (e) => {
+            const computerChoice = getComputerChoice();
+            const humanChoice = b;
+            playRound(humanChoice, computerChoice);
+            announceWinner(humanScore, computerScore);
+        
+        })
+
+        scissorsBtn.addEventListener('click', (e) => {
+            const computerChoice = getComputerChoice();
+            const humanChoice = c;
+            playRound(humanChoice, computerChoice);
+            announceWinner(humanScore, computerScore);
+        
+        })
+
+        againBtn.addEventListener('click', (e) => {
+            let humanScore = 0;
+            let computerScore = 0;
+            document.getElementById('rockButton').removeAttribute('disabled');
+            document.getElementById('paperButton').removeAttribute('disabled');
+            document.getElementById('scissorsButton').removeAttribute('disabled');
+        })
         
               
     </script>
